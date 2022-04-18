@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="UTF-8">
+    <title>Home</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(69, 75, 150, 255), rgba(108, 70, 117, 255), rgba(69, 75, 150, 255));
+        }
+
+        .flag {
+            flex: 1;
+            width: 140px;
+            height: 100vh !important;
+            border-radius: 0px 0px 5px 5px;
+            background-color: rgba(247, 194, 0, 0.8);
+            position: fixed;
+            right: 10%;
+            top: 0;
+            justify-content: flex-end;
+        }
+
+        .menu {
+            position: relative;
+            margin-top: 50px;
+            font-family: "Corbel";
+            font-size: 18px;
+            padding: 120px 0;
+        }
+
+        .menu > ul {
+            padding: 0;
+            list-style-type: none;
+            text-align: center;
+        }
+
+        .menu > ul > li {
+            z-index: 100;
+            text-align: center;
+            color: black;
+            list-style-type: none;
+        }
+
+        .menu > ul > li > a {
+            text-decoration: none;
+            color: darkslateblue;
+        }
+
+        .menu > ul > li > a:hover {
+            background-color: #cccccc;
+        }
+
+        .intext-href {
+            color: orange;
+        }
+
+        .intext-href:hover {
+            color: gold;
+        }
+
+        .content-block {
+            width: 80%;
+            margin: auto;
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .wrapper {
+            justify-content: flex-start;
+            flex-basis: calc(100% - 160px);
+            color: azure;
+            font-family: "Candara Light";
+            text-align: left;
+            box-sizing: border-box;
+            padding: 40px;
+            background-color: rgba(44, 44, 44, 0.6);
+        }
+
+        .article-title {
+            text-align: center;
+            font-family: "Century Gothic";
+        }
+
+        .header {
+            display: flex;
+            padding: 40px 0 10px 0;
+            align-items: center;
+        }
+
+        .title {
+            font-size: calc(1rem + 5vw);
+            font-family: "Bauhaus 93";
+            justify-content: flex-start;
+            white-space: nowrap;
+            color: rgba(247, 194, 0, 0.8);
+            flex: 2;
+        }
+
+        .logo {
+            z-index: 100;
+            display: block;
+            justify-content: flex-end;
+            flex: 1;
+            padding: 0 80px 0 0;
+            height: 15vw;
+        }
+
+        .intext-picture-left {
+            height: 20vw;
+            z-index: 100;
+            float: left;
+            margin: 0 10px 0 0;
+            display: flex;
+        }
+
+        .intext-picture-right {
+            height: 20vw;
+            z-index: 100;
+            float: right;
+            margin: 0 10px 0 10px;
+            display: flex;
+        }
+
+        .intext-table {
+            size: 15vw;
+            font-size: 1vw;
+            margin: 0 50px 0 0;
+            font-family: "Century Gothic";
+            border-radius: 4px;
+            border: 2px solid black;
+            display: grid;
+            border: 20px;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            background-color: gold;
+            grid-gap: 7px;
+            color: #222222;
+
+        }
+
+        .intext-table-item {
+            background-color: white;
+        }
+
+
+        .lists {
+            display: flex;
+        }
+
+        #upbutton {
+            bottom: 30px;
+            right: 30px;
+            cursor: pointer;
+            display: none;
+            position: fixed;
+            z-index: 999;
+            background-color: rgba(44, 44, 44, 0.6);
+            border-radius: 50%;
+        }
+
+        footer {
+            position: relative;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            background: #111;
+            height: auto;
+            width: 80vw;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #fff;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .gallery {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 180px;
+        }
+
+        .gallery:hover {
+            border: 1px solid #777;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+        .desc {
+            padding: 15px;
+            text-align: center;
+        }
+
+
+        @media (max-width: 1023px) {
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .content {
+                display: flex;
+                padding: 0;
+                flex-direction: column;
+            }
+
+            .content-block {
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .header {
+                flex: 1;
+                display: flex;
+                text-align: center;
+                padding: 0;
+                width: 100%;
+            }
+
+            .title {
+                justify-content: flex-start;
+            }
+
+            .logo {
+                justify-content: flex-end;
+                padding: 0;
+                margin: auto;
+            }
+
+            .flag {
+                position: static;
+                width: 100%;
+                flex: 1;
+                justify-content: center;
+                border-radius: 0;
+            }
+
+            .menu {
+                position: relative;
+                flex: 1;
+                display: block;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .wrapper {
+                flex: 10;
+                width: 100%;
+            }
+
+            footer {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="content-block">
+    <div class="header">
+        <div class="title">BLIND PEAKS</div>
+        <div class="logo"><a href="/home"><img class="logo" src="../../../static/resources/logo.png"/></a></div>
+    </div>
+    <div class="content">
+        <div class="flag">
+            <nav class="menu">
+                <ul>
+                    <li><a href="#">MENU</a></li>
+                    <li><a href="#">BIO</a></li>
+                    <li><a href="#">WORKS</a></li>
+                    <li><a href="#">LINKS</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="wrapper">
+            <h1 class="article-title">Article</h1>
+            <div class="intext-picture-left"><img src="../../../static/resources/pic1.jpg"></div>
+            <p> Ширина основной части для ПК версии – фиксированная (1024 пикселей)
+                При нажатии на логотип – переход на главную страницу
+                Все ссылки должны подсвечиваться при наведении (в меню – фон, в тексте – цвет текста)
+                Заголовок страницы с помощью тега h1</p>
+            <p>
+                При верстке использовать HTML5-тэги (header, footer, section, article, nav)
+                Мобильная версия сайта включается для экранов с шириной меньше 1024 пикселей. В мобильной версии все
+                блоки -
+                <a class="intext-href" href=""> не фиксированные</a>, растягиваются по ширине экрана
+                Примерное расположение блоков в мобильной версии – см. рис. 6
+                Ширина основной части для ПК версии – фиксированная (1024 пикселей)
+            </p>
+            <p>
+                При нажатии на логотип – переход на главную страницу
+                Все ссылки должны подсвечиваться при наведении (в меню – фон, в тексте – цвет текста)
+                Заголовок страницы с помощью тега h1
+                При верстке использовать HTML5-тэги (header, footer, section, article, nav)
+            <div class="intext-picture-right"><img src="../../../static/resources/draw.jpeg"></div>
+            Мобильная версия сайта включается для экранов с шириной меньше 1024 пикселей. В мобильной версии все
+            блоки
+            – не фиксированные, растягиваются по ширине экрана
+            Примерное расположение блоков в мобильной версии – см. рис. 6
+            </p>
+            <div class="intext-table">
+                <div class="intext-table-item">таблица</div>
+                <div class="intext-table-item">необходимая</div>
+                <div class="intext-table-item">по</div>
+                <div class="intext-table-item">заданию</div>
+            </div>
+            <div class="lists">
+                <ul>
+                    <li>Раз</li>
+                    <li>Два</li>
+                    <li>Три</li>
+                </ul>
+                <ol>
+                    <li>A</li>
+                    <li>B</li>
+                    <li>C</li>
+                </ol>
+            </div>
+            <div class="gallery">
+                <a target="_blank" href="../../../static/resources/gallery/1.jpg">
+                    <img src="../../../static/resources/gallery/1.jpg" alt="Cinque Terre" width="600" height="400">
+                </a>
+                <div class="desc">Zlata Parking</div>
+            </div>
+
+            <div class="gallery">
+                <a target="_blank" href="../../../static/resources/gallery/2.jpg">
+                    <img src="../../../static/resources/gallery/2.jpg" alt="Forest" width="600" height="400">
+                </a>
+                <div class="desc">Zlata Park</div>
+            </div>
+
+            <div class="gallery">
+                <a target="_blank" href="../../../static/resources/gallery/6.jpg">
+                    <img src="../../../static/resources/gallery/6.jpg" alt="Northern Lights" width="600" height="400">
+                </a>
+                <div class="desc">Dasha Room</div>
+            </div>
+
+            <div class="gallery">
+                <a target="_blank" href="../../../static/resources/gallery/4.jpg">
+                    <img src="../../../static/resources/gallery/4.jpg" alt="Mountains" width="600" height="400">
+                </a>
+                <div class="desc">Zlata ostrov</div>
+            </div>
+        </div>
+        <div id="upbutton"><img src="../../../static/resources/arrow.png" alt="arrow" width="40" height="40"></div>
+    </div>
+</div>
+<footer>
+    <div class="footer-content">
+        Copyright 2022
+    </div>
+</footer>
+<script>
+    $(window).on('scroll', function () {
+        if ($(this).scrollTop() > 100) {
+            if ($('#upbutton').is(':hidden')) {
+                $('#upbutton').css({opacity: 2}).fadeIn('slow');
+            }
+        } else {
+            $('#upbutton').stop(true, false).fadeOut('fast');
+        }
+    });
+    $('#upbutton').on('click', function () {
+        $('html, body').stop().animate({scrollTop: 0}, 300);
+    });
+</script>
+</body>
+</html>
+

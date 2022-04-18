@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="UTF-8">
+    <title>Second</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(69, 75, 150, 255), rgba(108, 70, 117, 255), rgba(69, 75, 150, 255));
+        }
+    </style>
+</head>
+<body>
+<script>
+    localStorage.clear();
+    let test = {
+        name: 'Гулять'
+    };
+    localStorage.setItem('В работе', JSON.stringify(test));
+    console.dir(JSON.parse(localStorage.getItem('В работе')));
+    let raw = localStorage.getItem("lists");
+    let lists = JSON.parse(raw);
+    if (lists == null) {
+        console.log('append');
+        lists = [{"name": "Новые задачи"}, {"name": "В работе"}, {"name": "Завершены"}];
+        localStorage.setItem('lists', JSON.stringify(lists));
+    }
+
+    function createGroup(className, title) {
+        var group = document.createElement('div');
+        group.className = className;
+        group.style.width = '100px';
+        group.style.height = '600px';
+        group.style.flex = '1';
+        group.style.margin = '20px 40px 0 40px';
+        group.style.backgroundColor = 'rgba(200, 200, 200, 0.6)';
+        group.id = title;
+        return group
+    }
+
+    let wrapper = document.createElement('div');
+    wrapper.className = 'wrapper';
+    wrapper.style.width = '80vw';
+    wrapper.style.height = '100vw';
+    wrapper.style.display = 'flex';
+    wrapper.style.margin = 'auto';
+    wrapper.style.alignItems = 'flex-start';
+    wrapper.style.backgroundColor = 'rgba(44, 44, 44, 0.6)';
+    document.body.appendChild(wrapper);
+
+
+    lists.forEach(group => {
+        console.dir(group)
+        document.getElementsByClassName('wrapper')[0].appendChild(createGroup("task-list", group['name']));
+    })
+
+    function createTask(content) {
+        let task = document.createElement('div');
+        task.className = 'task';
+        task.style.backgroundColor = 'rgba(44, 44, 44, 0.6)';
+        task.style.width = 'auto';
+        task.style.height = '20px';
+        task.style.margin = '5px 10px 5px 10px';
+        task.innerText = content;
+        return task;
+    }
+
+    lists.forEach(group=> {
+        console.dir(group);
+        console.log('mda');
+        for (let rTask in localStorage.getItem(group['name'])) {
+            console.dir(rTask);
+            let task = JSON.parse(rTask)
+            document.getElementById(group['name']).appendChild(createTask(task['name']));
+            console.dir(task);
+        }
+    })
+</script>
+</body>
+</html>
