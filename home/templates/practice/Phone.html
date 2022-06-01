@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SanctionStore</title>
+</head>
+<style>
+    .body {
+
+    }
+
+    .header {
+        margin-top: 20px;
+        margin-left: 15px;
+    }
+
+    .header a {
+        text-decoration: none;
+        color: #222222;
+    }
+
+    .header a:hover {
+        color: #ff7777;
+    }
+
+    .content {
+        width: 90%;
+        height: 500px;
+        margin: 40px auto auto;
+        padding: auto;
+        display: flex;
+    }
+
+
+    .icon > img {
+        width: 451px;
+        padding: auto;
+    }
+
+    .icon {
+
+    }
+
+    .data {
+        flex: 1;
+        padding-left: 80px;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    }
+
+
+    .data-description {
+        font-size: 16px;
+        color: #777777;
+        margin-bottom: 20px;
+    }
+
+    .old-price {
+        text-decoration: line-through;
+        color: #302f30;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .price {
+        font-size: 24px;
+        color: #ff7777;
+        display: flex;
+        margin-bottom: 25px;
+        font-weight: bold;
+        gap: 4px;
+    }
+
+    .price-currency {
+        font-weight: normal;
+        font-size: 14px;
+        vertical-align: bottom;
+    }
+
+    .buy-selector > button {
+        box-sizing: border-box;
+        border-radius: 4px;
+        font-size: 16px;
+        height: 45px;
+        width: 180px;
+        border: #ff7777 solid;
+        margin-bottom: 20px;
+    }
+
+    .toCart {
+        background-color: #ff7777;
+        color: white;
+    }
+
+    .toCart:hover {
+        opacity: 0.7;
+    }
+
+    .buyNow {
+        color: #ff7777;
+        background-color: white;
+    }
+
+    .buyNow:hover {
+        background-color: #ff7777;
+        color: white;
+        opacity: 0.7;
+    }
+
+    .color-selector {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 30px;
+        margin-top: 8px;
+    }
+
+    .color-selector > input[type="radio"] {
+        display: none;
+    }
+
+    .color-selector label {
+        display: flex;
+        background-color: #ddd;
+        font-family: Arial;
+        font-size: 16px;
+        cursor: pointer;
+
+        width: 50px;
+        height: 50px;
+    }
+
+    #colorRed {
+        background-color: #d25324;
+    }
+
+    #colorBlack {
+        background-color: #302f30;
+    }
+
+    #colorBlue {
+        background-color: #4ba9ff;
+    }
+    #colorYellow {
+        background-color: #f7c200;
+    }
+    #colorPink {
+        background-color: #ff44ba;
+    }
+
+    .color-selector input[type="radio"]:checked + #colorRed {
+        padding-top: 5px;
+        background: linear-gradient(to bottom, #d25324 50px, transparent 5px);
+        border-bottom: 5px solid #d25324;
+    }
+
+    .color-selector input[type="radio"]:checked + #colorYellow {
+        padding-top: 5px;
+        background: linear-gradient(to bottom, #f7c200 50px, transparent 5px);
+        border-bottom: 5px solid #f7c200;
+    }
+
+    .color-selector input[type="radio"]:checked + #colorPink {
+        padding-top: 5px;
+        background: linear-gradient(to bottom, #ff44ba 50px, transparent 5px);
+        border-bottom: 5px solid #ff44ba;
+    }
+
+    .color-selector input[type="radio"]:checked + #colorBlack {
+        padding-top: 5px;
+        background: linear-gradient(to bottom, #302f30 50px, transparent 5px);
+        border-bottom: 5px solid #302f30;
+    }
+
+    .color-selector input[type="radio"]:checked + #colorBlue {
+        padding-top: 5px;
+        background: linear-gradient(to bottom, #4ba9ff 50px, transparent 5px);
+        border-bottom: 5px solid #4ba9ff;
+    }
+
+
+    .bonus-info > ul {
+        padding-left: 0px;
+        list-style: none;
+    }
+
+    .bonus-info li:before {
+        content: "\2714\0020";
+    }
+
+    .colored {
+        color: #ff7777;
+    }
+</style>
+<body>
+<div class="header"><a href="PhoneCart.html">Каталог</a> / <a href="#">Смартфон</a> /</div>
+<div class="content">
+    <div class="icon"><img src="../../../static/resources/a32.jpg" alt="PhoneIcon"></div>
+    <div class="data">
+        <h1 class="data-title">Samsung Galaxy A32</h1>
+        <div class="data-description">Современный смартфон, 4 ядра, 128гб оперативной памяти</div>
+        <div class="old-price"> 24 590</div>
+        <div class="price"> 19 590
+            <div class="price-currency"> руб</div>
+        </div>
+        Выберете цвет:
+        <div class="color-selector">
+            <input type="radio" id="radio1" name="color" value="red" checked>
+            <label id="colorRed" for="radio1"></label>
+            <input type="radio" id="radio2" name="color" value="black">
+            <label id="colorBlack" for="radio2"></label>
+            <input type="radio" id="radio3" name="color" value="blue">
+            <label id="colorBlue" for="radio3"></label>
+            <input type="radio" id="radio4" name="color" value="yellow">
+            <label id="colorYellow" for="radio4"></label>
+            <input type="radio" id="radio5" name="color" value="pink">
+            <label id="colorPink" for="radio5"></label>
+        </div>
+        <div class="buy-selector">
+            <button class="toCart">В корзину</button>
+            <button class="buyNow">Купить в 1 клик</button>
+        </div>
+        <div class="bonus-info">
+            <ul>
+                <li><a class="colored">Бесплатная</a> доставка</li>
+                <li>Гарантия <a class="colored">1 год</a></li>
+                <li><a class="colored">200 бонусов</a> на карту</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+
+</head>
+<body>
+<style>
+
+    body {
+        min-height: 100vh;
+        max-width: 100%;
+        background-image: linear-gradient(rgba(12, 12, 68, 0.84), rgba(72, 45, 49, 0.87), rgba(12, 12, 68, 0.84));
+        animation: background 20s infinite alternate;
+    }
+
+    @keyframes background {
+        100% {
+            background-position: 0 100vh;
+        }
+    }
+
+    #header {
+        display: flex;
+        justify-content: center;
+    }
+
+    .form {
+        position: relative;
+        width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .search-bar {
+        margin-top: 25px;
+
+    }
+
+    .search-bar input {
+        width: 100%;
+        height: 42px;
+        padding-left: 20px;
+        box-sizing: border-box;
+        border-radius: 23px;
+        outline: none;
+        background: #ffffff;
+        color: #444444;
+        transition: .5s;
+        border: none;
+    }
+
+    .search-bar button {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        width: 42px;
+        height: 42px;
+        border: none;
+        background: #ffffff;
+        border-radius: 0 23px 23px 0;
+        cursor: pointer;
+        transition: .5s;
+    }
+
+    .search-bar button:before {
+        content: url('../../../static/resources/special/search.png');
+        width: 10px;
+        z-index: 2;
+    }
+
+    #add {
+        margin-top: 25px;
+        margin-left: 40px;
+        border-radius: 23px 23px 23px 23px;
+        width: 40px;
+        height: 40px;
+        border: none;
+    }
+
+    #add:before {
+        position: relative;
+        top: -10px;
+        right: -1px;
+        content: '+';
+        font-size: 50px;
+        text-align: center;
+        margin: auto;
+        color: #ffffff;
+        width: 10px;
+        z-index: 2;
+    }
+
+    .plus {
+        cursor: pointer;
+        margin-top: 25px;
+        width: 42px;
+        height: 42px;
+        margin-left: 50px;
+        background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
+        background-position: center;
+        background-size: 50% 2px, 2px 50%; /*thickness = 2px, length = 50% (25px)*/
+        background-repeat: no-repeat;
+    }
+
+    .radius {
+        border-radius: 50%;
+    }
+
+    #contacts-wrapper {
+        margin-top: 40px;
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cell {
+        width: 360px;
+        height: 10px;
+        border-radius: 8px;
+        display: flex;
+        margin: auto;
+        background: white;
+        font-size: 20px;
+        font-family: "helvetica";
+        padding: 20px;
+        align-items: center;
+        vertical-align: middle;
+    }
+
+    .phone-text {
+        display: flex;
+        right: 0;
+        flex: 3;
+    }
+
+    .name-text {
+        flex: 10;
+    }
+
+    .delete-contact {
+        width: 20px;
+        height: auto;
+        border: none;
+        border-radius: 50%;
+        color: rgba(200, 200, 200, 0.8);
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0);
+        cursor: pointer;
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
+        opacity: 0;
+        -webkit-transition: opacity 200ms ease-in;
+        -moz-transition: opacity 200ms ease-in;
+        transition: opacity 200ms ease-in;
+        pointer-events: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .modal:target {
+        opacity: 1;
+        pointer-events: auto;
+        overflow-y: auto;
+    }
+
+    .modal-dialog {
+        position: relative;
+        width: auto;
+        margin: 10px;
+    }
+
+    @media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+    }
+
+    .modal-content {
+        position: relative;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: .3rem;
+        outline: 0;
+    }
+
+    .modal-content img {
+        width: 20%;
+        margin: auto;
+        padding-top: 30px;
+    }
+
+    .modal-header {
+        margin: auto;
+    }
+
+    @media (min-width: 768px) {
+        .modal-content {
+            -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        }
+    }
+
+    .modal-header {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #eceeef;
+    }
+
+    .modal-title {
+        text-align: center;
+        margin: 0 10px 0 0;
+        line-height: 1.5;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .close {
+        float: right;
+        font-family: sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: .5;
+        text-decoration: none;
+    }
+
+    .close:focus, .close:hover {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        opacity: .75;
+    }
+
+    .modal-body {
+        position: relative;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 15px;
+        overflow: auto;
+    }
+
+</style>
+<div id="header">
+    <div class="search-bar">
+        <form class="form">
+            <input type="text" class="filter" placeholder="Номер..."/>
+            <button type="submit" value=""/>
+        </form>
+    </div>
+    <form action="#openModal">
+        <button type="submit" class="plus radius" value=""/>
+    </form>
+</div>
+
+<section id="modal-block">
+    <div class="wrapper">
+        <div id="openModal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <img src="../../../static/resources/special/save.png">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Добавить контакт</h3>
+                        <a href="#close" title="Close" class="close">×</a>
+                    </div>
+                    <div class="modal-body">
+                        <form id="adder" class="modal-form">
+                            <input name='name' type="text">
+                            <input name='phone' class="phoneNumber">
+                            <input type="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="contacts-wrapper">
+
+</div>
+</body>
+<script src="7form.js"></script>
+<script src="7valid.js"></script>
+<script src="filter.js"></script>
+<script>
+    window.onkeydown = function (event) {
+        if (event.code == 'KeyR') {
+            localStorage.clear();
+            window.location.reload();
+        }
+    };
+    let contactsKey = 'contacts';
+
+    function getObject(name) {
+        return JSON.parse(localStorage.getItem(name));
+    }
+
+    function setObject(name, obj) {
+        localStorage.setItem(name, JSON.stringify(obj));
+    }
+
+    function getPhoneCell(phone, name) {
+        console.log('getPhoneCell:');
+        let cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.innerHTML = '<div class = \'name-text\'>' + name + ' </div> ' +
+            '<div class = \'phone-text\'>' + phone + ' </div> ' +
+            '<button class = \'delete-contact\'>' + 'X' + ' </button> ';
+        cell.addEventListener('click', function () {
+            console.log('delete: ' + name);
+            let contacts = getObject(contactsKey);
+            delete contacts[name];
+            setObject(contactsKey, contacts);
+            showContacts();
+        });
+
+        return cell;
+
+    }
+
+    function getSortArray(map) {
+        let sorted = map.sort((a, b) => {
+            console.dir(a);
+            let fa = a[1].toLowerCase(),
+                fb = b[1].toLowerCase();
+
+            if (fa < fb) {
+                return -1;
+            }
+            if (fa > fb) {
+                return 1;
+            }
+            return 0;
+        });
+        let result = {};
+        sorted.forEach(x => {
+            result[x[0]] = x[1];
+        });
+        return result
+    }
+
+    function showContacts() {
+        let contacts = getObject(contactsKey);
+        let sorted = getSortArray(Object.entries(contacts));
+        wrapper.innerHTML = '';
+        Object.entries(sorted).filter((x) => isValid(x[1], x[0])
+        ).forEach((x) => {
+            wrapper.appendChild(getPhoneCell(x[1], x[0]))
+        });
+    }
+
+    let wrapper = document.getElementById('contacts-wrapper');
+
+    let contacts = getObject(contactsKey);
+    if (contacts == null) {
+        console.log('isNull');
+        contacts = {
+            '8-995-995-99-95': 'Dima',
+            '8-111-111-99-88': 'Bima'
+        };
+        setObject(contactsKey, contacts);
+    }
+
+    showContacts(contacts);
+
+    let cells = document.getElementsByClassName('cell');
+    for (let i = 0; i < cells.length; i++) {
+        let cell = cells[i];
+        cell.getElementsByClassName('delete-contact')[0].addEventListener('click', function () {
+
+
+        });
+    }
+    setupPhoneFields("phoneNumber");
+    setupFilter("filter");
+</script>
+</html>

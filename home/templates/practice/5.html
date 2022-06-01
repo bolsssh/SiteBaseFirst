@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calc</title>
+</head>
+<body>
+<div id="cart-wrapper">
+    <table id="product-table">
+        <tr>
+            <th>Name</th>
+            <th>Count</th>
+            <th>Price</th>
+        </tr>
+    </table>
+    <div id="sum-wrapper">
+    </div>
+</div>
+</body>
+<script>
+    function calculateSum(products) {
+        return products.reduce((sum, prod) => {
+            return sum + prod.price * prod.count;
+        }, 0)
+    }
+
+    function calculateSumWithDisc(products, discounts) {
+        let productsDiscs = new Array(discounts.length).fill(0);
+
+        let sum = products.reduce((sum, prod) => {
+            let currentSum = prod.price * prod.count;
+
+            for (let i = 0; i < discounts.length; i++) {
+                if (discounts[i].conditions.products === null ||
+                    discounts[i].conditions.products.has(prod.id)) {
+                    productsDiscs[i] += currentSum * discounts[i].percent / 100;
+                }
+            }
+            return sum + currentSum;
+        }, 0);
+
+        let discSum = 0;
+        for (let i = 0; i < discounts.length; i++) {
+            if (discounts[i].conditions.minOrderSum === null ||
+                sum > discounts[i].conditions.minOrderSum) {
+                discSum += productsDiscs[i];
+            }
+        }
+        let disc = (discSum / sum * 100).toFixed(2);
+        return {sum: sum, discount: disc}
+    }
+
+
+    let products = [{id: 10, price: 500, count: 2},
+        {id: 9, price: 200, count: 4}, {id: 2, price: 100, count: 3},
+        {id: 1, price: 500, count: 2},
+        {id: 3, price: 1000, count: 1}, {id: 4, price: 60, count: 60}];
+
+    console.log('Сумма заказа: ' + calculateSum(products) + ' руб');
+
+    let discounts = [{conditions: {minOrderSum: 100, products: new Set([1, 2, 3])}, percent: 10},
+        {conditions: {minOrderSum: 400, products: null}, percent: 20}];
+
+
+    let sumWDisc = calculateSumWithDisc(products, discounts);
+    console.log('Сумма заказа: ' + sumWDisc.sum + ' руб, скидка: ' + sumWDisc.discount + '%');
+
+
+    function fillTable(products, discounts) {
+        let table = document.getElementById('product-table');
+        for (let i = 0; i < products.length; i++) {
+            let row = document.createElement("tr");
+            let rh = document.createElement('td');
+            rh.innerText = 'Товар ' + products[i].id;
+            row.appendChild(rh);
+            let countItem = document.createElement('td');
+            let count = document.createElement('input');
+            count.type = 'number';
+            count.min = '0';
+            count.value = products.count;
+            count.addEventListener('change', function () {
+                products[i].count = this.value;
+                let sumWDisc = calculateSumWithDisc(products, discounts);
+                document.getElementById('sum-wrapper').innerText = 'Сумма заказа: ' + sumWDisc.sum + ' руб, скидка: ' + sumWDisc.discount + '%';
+            });
+            countItem.appendChild(count);
+            row.appendChild(countItem);
+            let price = document.createElement('td');
+            price.innerText = products[i].price;
+            row.appendChild(price);
+            table.appendChild(row)
+        }
+        return table;
+    }
+
+    fillTable(products, discounts);
+</script>
+</html>

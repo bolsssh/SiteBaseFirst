@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalog</title>
+    <link rel="stylesheet" href="slider.css">
+    <link rel="stylesheet" href="modal.css">
+    <link rel="stylesheet" href="range.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        min-height: 100vh;
+        background: #17A2B8;
+    }
+
+    ::selection {
+        color: #fff;
+        background: #17A2B8;
+    }
+
+    .wrapper {
+        width: 400px;
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px 25px 40px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    #filter {
+        text-align: center;
+        margin: auto;
+        width: 400px;
+    }
+
+    .price-controls {
+        display: none;
+    }
+
+    .model-chooser {
+        left: 50px;
+        margin-top: 50px;
+        margin-left: 20px;
+        text-align: left;
+    }
+
+    #modal-block {
+        text-align: center;
+    }
+</style>
+<body>
+<section id="slider_bl">
+    <div class="wrapper">
+        <input checked type=radio name="slider" id="slide1"/>
+        <input type=radio name="slider" id="slide2"/>
+        <input type=radio name="slider" id="slide3"/>
+        <input type=radio name="slider" id="slide4"/>
+        <div class="slider-wrapper">
+            <div class=inner>
+                <article>
+                    <img src="https://obninsksite.ru/assets/theme/images/blog/slider/1.jpg"/>
+                </article>
+                <article>
+                    <img src="https://obninsksite.ru/assets/theme/images/blog/slider/2.jpg"/>
+                </article>
+                <article>
+                    <img src="https://obninsksite.ru/assets/theme/images/blog/slider/3.jpg"/>
+                </article>
+                <article>
+                    <img src="https://obninsksite.ru/assets/theme/images/blog/slider/4.jpg"/>
+                </article>
+            </div>
+        </div>
+        <div class="slider-prev-next-control">
+            <label for=slide1></label>
+            <label for=slide2></label>
+            <label for=slide3></label>
+            <label for=slide4></label>
+        </div>
+        <div class="slider-dot-control">
+            <label for=slide1></label>
+            <label for=slide2></label>
+            <label for=slide3></label>
+            <label for=slide4></label>
+        </div>
+    </div>
+</section>
+<section id="filter">
+    <div class="wrapper">
+        <form>
+            <div>
+                <div class="price-controls">
+                    <div>Cost</div>
+                    <p>
+                        <label class="min-price"><input type="text" name="min-price" value="0"></label>
+                        <label class="max-price"> - <input type="text" name="max-price" value="400"></label>
+                </div>
+
+                <header>
+                    <h2>Price Range</h2>
+                </header>
+                <div class="price-input">
+                    <div class="field">
+                        <span>Min</span>
+                        <input type="number" class="input-min" value="2500">
+                    </div>
+                    <div class="separator">-</div>
+                    <div class="field">
+                        <span>Max</span>
+                        <input type="number" class="input-max" value="7500">
+                    </div>
+                </div>
+                <div class="ranger">
+                    <div class="progress"></div>
+                </div>
+                <div class="range-input">
+                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                </div>
+                <script src="range.js"></script>
+                <div class="range-controls">
+                    <div class="scale">
+                        <div class="bar"></div>
+                    </div>
+                    <div class="range-toggle range-toggle-min"></div>
+                    <div class="range-toggle range-toggle-max"></div>
+                </div>
+            </div>
+
+            <div class="model-chooser">
+                <p><a>Models:</a></p>
+                <div>
+                    <label>
+                        <input type="checkbox">
+                        <span> Samsung</span>
+                    </label>
+                    <p>
+                        <label>
+                            <input type="checkbox">
+                            <span> Apple</span>
+                        </label>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section id="modal-block">
+    <div class="wrapper">
+        <a href="#openModal">Оставить заявку</a>
+        <div id="openModal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                      <img src="../../../static/resources/special/save.png">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Заполните заявку</h3>
+                        <a href="#close" title="Close" class="close">×</a>
+                    </div>
+                    <div class="modal-body">
+                        <form class="modal-form">
+                            <input type="text">
+                            <input type="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

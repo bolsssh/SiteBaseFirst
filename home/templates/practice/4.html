@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            if (window.matchMedia('(max-width: 768px)').matches && window.matchMedia('(min-width: 426px)').matches) {
+                $(window).scroll(function () {
+                    let scrollTop = $(document).scrollTop() + ($(window).height() / 2);
+                    let positions = [];
+
+                    $('.gallery-item').each(function () {
+                        $(this).removeClass("centered");
+                        positions.push({position: $(this).position().top, element: $(this)});
+                    });
+
+                    let getClosest = closest(positions, scrollTop);
+                    getClosest.addClass("centered");
+                });
+
+                function closest(array, number) {
+                    let num = 0;
+                    for (let i = array.length - 1; i >= 0; i--) {
+                        if (Math.abs(number - array[i].position) < Math.abs(number - array[num].position)) {
+                            num = i;
+                        }
+                    }
+                    return array[num].element;
+                }
+            }
+        });
+    </script>
+</head>
+<style>
+    body {
+        background-color: #0c0c32;
+    }
+
+    .content {
+        display: flex;
+        margin: 40px auto;
+        width: 800px
+    }
+
+    .gallery {
+        margin: auto;
+        width: 100%;
+        gap: 50px;
+    }
+
+    .header {
+        margin-top: 40px;
+        margin-bottom: 35px;
+        color: white;
+        font-weight: bold;
+        font-size: 40px;
+        text-align: center;
+        font-family: Lobster;
+    }
+
+
+    .gallery-item {
+        position: relative;
+        margin: 5px;
+        float: left;
+        width: 180px;
+        border: none;
+        transition: 1s;
+    }
+
+
+    .gallery-item img {
+        width: 180px;
+        height: auto;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.15);
+        z-index: 3;
+    }
+
+    .gallery-grade {
+        z-index: 2;
+        position: absolute;
+        top: -15px;
+        text-transform: uppercase;
+        color: #c9c9c9;
+        width: 180px;
+        padding: 8px 0 8px 12px;
+        box-sizing: border-box;
+        font: bold 16px/30px Helvetica, Sans-Serif;
+        background: #00000054;
+
+        text-shadow: rgb(214, 175, 4) 1px 0 10px;
+    }
+
+    .gallery-grade:before {
+        content: "★";
+    }
+
+
+    .form {
+        position: relative;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .search-bar {
+        margin-top: 25px;
+
+    }
+
+    .search-bar input {
+        width: 100%;
+        height: 42px;
+        padding-left: 20px;
+        box-sizing: border-box;
+        border-radius: 23px;
+        outline: none;
+        background: #ffffff;
+        color: #444444;
+        transition: .5s;
+        border: none;
+    }
+
+    .search-bar button {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        width: 42px;
+        height: 42px;
+        border: none;
+        background: #f7c200;
+        border-radius: 0 23px 23px 0;
+        cursor: pointer;
+        transition: .5s;
+    }
+
+    .search-bar button:before {
+        content: url('../../../static/resources/special/search.png');
+        width: 10px;
+        z-index: 2;
+    }
+    .gallery-title {
+        display: none;
+    }
+
+
+
+    .gallery-description {
+        display: none;
+    }
+
+    .gallery-film-content button {
+        display: none;
+    }
+
+    .centered {
+        transform: scale(1.15);
+        z-index: 3;
+
+    }
+
+    .gallery-film-content button img {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            transition: 1s;
+            background-color: #222222;
+        }
+
+        .search-bar form {
+            width: 80%;
+        }
+
+
+        .gallery-description {
+
+        }
+
+        .content {
+            width: 80%;
+        }
+
+        .gallery {
+            display: flex;
+            margin-bottom: 100px;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .gallery-item {
+            width: 80vw;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .gallery-film-content {
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+            gap: 10px;
+        }
+
+        .gallery-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex: 2;
+        }
+
+        .gallery-title {
+            display: inline-block;
+            color: white;
+            padding-top: 10px;
+            font-family: "Arial Black";
+            font-size: 20px;
+            flex: 10;
+        }
+
+        .gallery-description {
+            display: flex;
+            color: #cccccc;
+            width: 95%;
+            font-family: Roboto;
+            flex: 8;
+        }
+
+        .gallery-grade {
+            display: inline-block;
+            background: none;
+            position: static;
+            padding: 10px 20px 0 0;
+            text-align: right;
+            justify-content: flex-end;
+            margin: 0;
+            flex: 2;
+
+        }
+
+        .gallery-item img {
+            width: 150px;
+        }
+
+        .gallery-film-content button {
+            display: inline-block;
+            margin-right: 10px;
+            width: auto;
+            background-color: #f7c200;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            flex: 2;
+            border-radius: 5px;
+        }
+
+        .gallery-film-content button img {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 426px) {
+
+        .gallery {
+            gap: 30px;
+        }
+
+        .gallery-item {
+            height: 70px;
+        }
+
+        .gallery-film-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            padding-left: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 50%,rgba(68, 68, 68, 0.0));
+            z-index: 1;
+        }
+
+        .gallery-header {
+            padding-left: 20px;
+            width: 250px;
+            z-index: 2;
+        }
+
+        .gallery-title {
+            width: 200px;
+            padding-top: 0;
+            font-size: 15px;
+            flex-basis: 60px;
+        }
+
+        .gallery-grade {
+            width: 80px;
+            flex: none;
+            color: white;
+            padding: 0 10px 0 0;
+
+        }
+
+        .gallery-description {
+            display: none;
+        }
+
+        .gallery-item img {
+            object-fit: cover;
+            width: 100%;
+            height: 70px;
+            position: absolute;
+            z-index: 0;
+        }
+
+        .gallery-film-content button {
+            padding: 0 0 0 0;
+            z-index: 2;
+            display: none;
+        }
+
+        .gallery-film-content button span {
+            display: none;
+        }
+
+        .gallery-film-content button img {
+            object-fit: scale-down;
+            display: inline-block;
+            opacity: 80%;
+            position: relative;
+            width: 60%
+        }
+    }
+</style>
+<body>
+<div class="header">Potter</div>
+<div class="search-bar">
+    <form class="form">
+        <input type="text" placeholder="Введите название фильма"/>
+        <button type="submit" value=""/>
+    </form>
+</div>
+<div class="content">
+    <div class="gallery">
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/1.jpg" alt="Mountains" title="first" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Камень Къеркегора</div>
+                    <p class="gallery-grade"> 4.3</p>
+                </div>
+                <span class="gallery-description">
+                   Два искателя приключений Нейтан Дрейк и Виктор Салливан по прозвищу Салли
+                   отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
+                   их к давно потерянному брату Нейтана.
+                </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span> <img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/2.jpg" alt="Mountains" title="second" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Шпионская комната</div>
+                    <p class="gallery-grade"> 4.1</p>
+                </div>
+                <span class="gallery-description">
+                   Два искателя приключений Нейтан Дрейк и Виктор Салливан по прозвищу Салли
+                   отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
+                   их к давно потерянному брату Нейтана.
+               </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/3.jpg" alt="Mountains" title="third" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Азкабанский урка</div>
+                    <p class="gallery-grade"> 3.3</p>
+                </div>
+                <span class="gallery-description">
+                   Этот фильм вообще Альфонско Куарон снял
+               </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/4.jpg" alt="Mountains" title="fourth" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Огненная кружка</div>
+                    <p class="gallery-grade"> 4.4</p>
+                </div>
+                <span class="gallery-description">
+                   Два искателя приключений Нейтан Дрейк и Виктор Салливан по прозвищу Салли
+                   отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
+                   их к давно потерянному брату Нейтана.
+               </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/5.jpg" alt="Mountains" title="fifth" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Клуб Жар-Птицы</div>
+                    <p class="gallery-grade"> 4.6</p>
+                </div>
+                <span class="gallery-description">
+                   Два искателя приключений Нейтан Дрейк и Виктор Салливан по прозвищу Салли
+                   отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
+                   их к давно потерянному брату Нейтана.
+               </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/6.jpg" alt="Mountains" title="sixth" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Принц под апартеидом</div>
+                    <p class="gallery-grade"> 4.7</p>
+                </div>
+                <span class="gallery-description">
+                   Два искателя приключений Нейтан Дрейк и Виктор Салливан по прозвищу Салли
+                   отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
+                   их к давно потерянному брату Нейтана.
+               </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="#">
+                <img src="../../../static/resources/posters/7.jpg" alt="Mountains" title="seventh" width="600"
+                     height="400">
+            </a>
+            <div class="gallery-film-content">
+                <div class="gallery-header">
+                    <div class="gallery-title">Подарки тёти Клавы</div>
+                    <p class="gallery-grade"> 4.8</p>
+                </div>
+                <span class="gallery-description">
+                   Два искателя приключений Нейтан Дрейк и Виктор Салливан по прозвищу Салли
+                   отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
+                   их к давно потерянному брату Нейтана.
+               </span>
+                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
+                        src='../../../static/resources/special/eye.png'></button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

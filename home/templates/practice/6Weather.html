@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+</head>
+<style>
+    .wrapper {
+        width: 100%;
+        margin: auto;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #dddddd;
+        border-collapse: collapse;
+    }
+
+    table th {
+        font-weight: bold;
+        padding: 5px;
+        background: #efefef;
+        border: 1px solid #dddddd;
+    }
+
+    table > tr > td {
+        text-align: center;
+        border: 1px solid #0a0a2e;
+        padding: 5px;
+    }
+
+    .post-loading {
+        display: none;
+        flex-direction: column;
+    }
+</style>
+<body>
+<div class="wrapper">
+    <div class="post-loading" id="selector">
+        <select>
+            <option>Izhevsk</option>
+            <option>Moscow</option>
+            <option>Kazan</option>
+        </select>
+    </div>
+    <div class="pre-loading" id="loader">Загрузка ...</div>
+</div>
+</body>
+<script>
+    function getDay(d) {
+        switch (d) {
+            case 1:
+                return 'Today';
+            case 2:
+                return 'Tommorow';
+            case 3:
+                return 'Aftemorrow';
+        }
+    }
+
+    function getLoc(city) {
+        switch (city) {
+            case 'Izhevsk':
+                return "lon=53.2&lat=56.9";
+            case 'Moscow':
+                return "lon=55.75&lat=37.6";
+            case 'Kazan':
+                return "lon=55.5&lat=49.7";
+
+        }
+    }
+
+    function getTable(data) {
+        let offset = Number(data['init'].substring(6, 8));
+        let table = document.createElement('table');
+        let header = document.createElement('tr');
+        header.appendChild(document.createElement('th'));
+        for (let i = 0; i < 24; i += 3) {
+            let th = document.createElement('th');
+            th.innerText = i;
+            header.appendChild(th);
+        }
+        table.appendChild(header);
+        for (let d = 1; d < 4; d++) {
+
+            let row = document.createElement("tr");
+            let rh = document.createElement('td');
+            rh.innerText = getDay(d);
+            row.appendChild(rh);
+
+            for (let h = 0; h < 8; h++) {
+                if (d === 1 && h * 3 < offset) {
+                    let cell = document.createElement("td");
+
+                    row.appendChild(cell);
+                    continue;
+                }
+                let cell = document.createElement("td");
+                let info = data['dataseries'][d * h]['temp2m'] + '°C' + ' | ' + data['dataseries'][d * h]['rh2m'];
+                let cellText = document.createTextNode(info);
+
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+            table.appendChild(row)
+        }
+        return table;
+    }
+
+    async function fetchDataAsync(url) {
+        const response = await fetch(url);
+        return await response.json();
+    }
+
+    let inLoad = true;
+    let loc = '';
+    if (!inLoad) {
+        let selector = document.getElementById('selector');
+        let selectedCity = selector.options[selector.selectedIndex].text;
+        loc = getLoc(selectedCity);
+    } else loc = getLoc('Izhevsk');
+
+
+    function getUrl(loc) {
+        return 'http://www.7timer.info/bin/civil.php?' + loc + '&output=json';
+    }
+
+
+    function update(url) {
+        fetchDataAsync(url).then(data => {
+            document.getElementsByClassName('wrapper')[0].appendChild(getTable(data));
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('selector').style.display = 'flex';
+            inLoad = false;
+        });
+    }
+
+    update(getUrl(loc));
+
+    document.querySelector("select").addEventListener('change', function (e) {
+        loc = getLoc(this.value);
+        let wrapper = document.getElementsByClassName('wrapper')[0];
+        wrapper.removeChild(wrapper.lastChild);
+        document.getElementById('loader').style.display = 'block';
+        update(getUrl(loc));
+    });
+
+    var original = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
+
+    Object.defineProperty(HTMLSelectElement.prototype, 'value', {
+        get: original.get,
+        set(val) {
+            var old = this.value;
+            var res = original.set.call(this, val);
+            if (old != val) this.dispatchEvent(new Event('change'));
+            return res
+        }
+    })
+</script>
+</html>
