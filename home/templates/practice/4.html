@@ -10,34 +10,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        $(function () {
-            if (window.matchMedia('(max-width: 768px)').matches && window.matchMedia('(min-width: 426px)').matches) {
-                $(window).scroll(function () {
-                    let scrollTop = $(document).scrollTop() + ($(window).height() / 2);
-                    let positions = [];
+    <!-- <script>
+         $(function () {
+             if (window.matchMedia('(max-width: 768px)').matches && window.matchMedia('(min-width: 426px)').matches) {
+                 $(window).scroll(function () {
+                     let scrollTop = $(document).scrollTop() + ($(window).height() / 2);
+                     let positions = [];
 
-                    $('.gallery-item').each(function () {
-                        $(this).removeClass("centered");
-                        positions.push({position: $(this).position().top, element: $(this)});
-                    });
+                     $('.gallery-item').each(function () {
+                         $(this).removeClass("centered");
+                         positions.push({position: $(this).position().top, element: $(this)});
+                     });
 
-                    let getClosest = closest(positions, scrollTop);
-                    getClosest.addClass("centered");
-                });
+                     let getClosest = closest(positions, scrollTop);
+                     getClosest.addClass("centered");
+                 });
 
-                function closest(array, number) {
-                    let num = 0;
-                    for (let i = array.length - 1; i >= 0; i--) {
-                        if (Math.abs(number - array[i].position) < Math.abs(number - array[num].position)) {
-                            num = i;
-                        }
-                    }
-                    return array[num].element;
-                }
-            }
-        });
-    </script>
+                 function closest(array, number) {
+                     let num = 0;
+                     for (let i = array.length - 1; i >= 0; i--) {
+                         if (Math.abs(number - array[i].position) < Math.abs(number - array[num].position)) {
+                             num = i;
+                         }
+                     }
+                     return array[num].element;
+                 }
+             }
+         });
+     </script>-->
 </head>
 <style>
     body {
@@ -46,23 +46,27 @@
 
     .content {
         display: flex;
-        margin: 40px auto;
-        width: 800px
+        margin: 20px auto;
+        width: 1200px;
     }
 
     .gallery {
         margin: auto;
         width: 100%;
-        gap: 50px;
+        gap: 60px;
+        padding-left: 6.6%;
     }
 
     .header {
         margin-top: 40px;
         margin-bottom: 35px;
+        width: 200px;
+        margin: auto;
         color: white;
         font-weight: bold;
         font-size: 40px;
         text-align: center;
+        background-color: #ff2a31;
         font-family: Lobster;
     }
 
@@ -71,14 +75,14 @@
         position: relative;
         margin: 5px;
         float: left;
-        width: 180px;
+        width: 250px;
         border: none;
         transition: 1s;
     }
 
 
     .gallery-item img {
-        width: 180px;
+        width: 100%;
         height: auto;
     }
 
@@ -91,14 +95,14 @@
         z-index: 2;
         position: absolute;
         top: -15px;
+        right: 10px;
+        text-align: right;
         text-transform: uppercase;
         color: #c9c9c9;
         width: 180px;
         padding: 8px 0 8px 12px;
         box-sizing: border-box;
-        font: bold 16px/30px Helvetica, Sans-Serif;
-        background: #00000054;
-
+        font: bold 20px/30px Helvetica, Sans-Serif;
         text-shadow: rgb(214, 175, 4) 1px 0 10px;
     }
 
@@ -109,26 +113,30 @@
 
     .form {
         position: relative;
-        width: 300px;
+        width: 1030px;
         margin: 0 auto;
     }
 
     .search-bar {
         margin-top: 25px;
-
     }
 
     .search-bar input {
-        width: 100%;
         height: 42px;
+        width: 100%;
         padding-left: 20px;
         box-sizing: border-box;
-        border-radius: 23px;
         outline: none;
         background: #ffffff;
         color: #444444;
         transition: .5s;
         border: none;
+
+    }
+
+    .search-bar form {
+        /*width: 80%;*/
+        margin: auto;
     }
 
     .search-bar button {
@@ -138,8 +146,8 @@
         width: 42px;
         height: 42px;
         border: none;
-        background: #f7c200;
-        border-radius: 0 23px 23px 0;
+        background: #ffffff;
+        /*border-radius: 0 23px 23px 0;*/
         cursor: pointer;
         transition: .5s;
     }
@@ -149,10 +157,10 @@
         width: 10px;
         z-index: 2;
     }
+
     .gallery-title {
         display: none;
     }
-
 
 
     .gallery-description {
@@ -176,7 +184,11 @@
     @media (max-width: 768px) {
         body {
             transition: 1s;
-            background-color: #222222;
+            background-color: #0c0c32;
+        }
+
+        .header {
+            width: 80%;
         }
 
         .search-bar form {
@@ -190,10 +202,12 @@
 
         .content {
             width: 80%;
+            padding: 0;
         }
 
         .gallery {
             display: flex;
+            padding: 0;
             margin-bottom: 100px;
             flex-direction: column;
             gap: 40px;
@@ -254,22 +268,30 @@
         }
 
         .gallery-film-content button {
-            display: inline-block;
-            margin-right: 10px;
-            width: auto;
-            background-color: #f7c200;
+            display: flex;
+            width: 160px;
+            background-color: #ff2a31;
             border: none;
             color: white;
-            padding: 15px 32px;
+            padding: 15px;
             text-align: center;
             text-decoration: none;
             font-size: 16px;
             flex: 2;
-            border-radius: 5px;
+            position: absolute;
+            right: 10px;
+            bottom: 0px;
+        }
+
+        .gallery-film-content span {
+            margin: auto;
         }
 
         .gallery-film-content button img {
-            display: none;
+            display: flex;
+            padding-left: 10px;
+            width: 30px;
+            filter: invert();
         }
     }
 
@@ -279,8 +301,21 @@
             gap: 30px;
         }
 
+        .content {
+            width: 95%;
+        }
+
+        .header {
+            width: 95%;
+        }
+
+        .search-bar form {
+            width: 95%;
+        }
+
         .gallery-item {
             height: 70px;
+            width: 100%;
         }
 
         .gallery-film-content {
@@ -289,20 +324,20 @@
             display: flex;
             flex-direction: row;
             padding-left: 0;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 50%,rgba(68, 68, 68, 0.0));
             z-index: 1;
         }
 
         .gallery-header {
-            padding-left: 20px;
-            width: 250px;
+            padding-left: 0px;
+            width: 260px;
             z-index: 2;
+            flex: 0;
         }
 
         .gallery-title {
             width: 200px;
             padding-top: 0;
-            font-size: 15px;
+            font-size: 14px;
             flex-basis: 60px;
         }
 
@@ -320,28 +355,36 @@
 
         .gallery-item img {
             object-fit: cover;
-            width: 100%;
+            width: 50%;
             height: 70px;
             position: absolute;
             z-index: 0;
+            display: none;
         }
 
         .gallery-film-content button {
             padding: 0 0 0 0;
             z-index: 2;
-            display: none;
+            top: 10px;
+            height: 50px;
+            width: 100px;
         }
 
         .gallery-film-content button span {
-            display: none;
+            font-size: 15px;
+            margin: auto;
         }
 
         .gallery-film-content button img {
+            margin: auto;
             object-fit: scale-down;
             display: inline-block;
             opacity: 80%;
             position: relative;
-            width: 60%
+            top: -10px;
+            padding: 0px;
+            width: 20px;
+
         }
     }
 </style>
@@ -370,8 +413,9 @@
                    отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
                    их к давно потерянному брату Нейтана.
                 </span>
-                <button onclick="window.location.href = '#'"><span>Смотреть</span> <img
-                        src='../../../static/resources/special/eye.png'></button>
+                <button onclick="window.location.href = '#'"><img src='../../../static/resources/special/eye.png'>
+                    <span>Смотреть</span>
+                </button>
             </div>
         </div>
 
@@ -390,8 +434,10 @@
                    отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
                    их к давно потерянному брату Нейтана.
                </span>
-                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
-                        src='../../../static/resources/special/eye.png'></button>
+                <button onclick="window.location.href = '#'">
+                    <img src='../../../static/resources/special/eye.png'>
+                    <span>Смотреть</span>
+                </button>
             </div>
         </div>
 
@@ -408,8 +454,10 @@
                 <span class="gallery-description">
                    Этот фильм вообще Альфонско Куарон снял
                </span>
-                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
-                        src='../../../static/resources/special/eye.png'></button>
+                <button onclick="window.location.href = '#'">
+                    <img src='../../../static/resources/special/eye.png'>
+                    <span>Смотреть</span>
+                </button>
             </div>
         </div>
 
@@ -448,8 +496,8 @@
                    отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
                    их к давно потерянному брату Нейтана.
                </span>
-                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
-                        src='../../../static/resources/special/eye.png'></button>
+                <button onclick="window.location.href = '#'"><img src='../../../static/resources/special/eye.png'>
+                    <span>Смотреть</span></button>
             </div>
         </div>
 
@@ -468,8 +516,8 @@
                    отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
                    их к давно потерянному брату Нейтана.
                </span>
-                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
-                        src='../../../static/resources/special/eye.png'></button>
+                <button onclick="window.location.href = '#'"><img src='../../../static/resources/special/eye.png'>
+                    <span>Смотреть</span></button>
             </div>
         </div>
 
@@ -488,8 +536,8 @@
                    отправляются на поиски величайшего сокровища мира. Кроме того, они надеются найти улики, которые приведут
                    их к давно потерянному брату Нейтана.
                </span>
-                <button onclick="window.location.href = '#'"><span>Смотреть</span><img
-                        src='../../../static/resources/special/eye.png'></button>
+                <button onclick="window.location.href = '#'"><img src='../../../static/resources/special/eye.png'>
+                    <span>Смотреть</span></button>
             </div>
         </div>
     </div>
